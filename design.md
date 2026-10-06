@@ -71,7 +71,7 @@ Warna putih hangat dan arang mendominasi. Hijau dipakai secukupnya agar foto dan
 
 ### 01 — Header
 
-Wordmark nama perusahaan di kiri, menu Tentang, Bidang Usaha, dan Kegiatan, serta tombol **Hubungi kami** menuju `/kontak`. Nama merek dan label menu bersumber dari konfigurasi. Header berlatar terang agar mudah dibaca dan tetap terlihat saat scroll. Di mobile, menu dibuka lewat tombol yang dapat digunakan dengan keyboard.
+Mengikuti arahan lanjutan dengan referensi [Ray Corral](https://raycorral.com/): header transparan dengan posisi tetap, wordmark di kiri, serta tautan Beranda, Tentang, Bidang Usaha, Kegiatan, dan Kontak di kanan. Tautan aktif dan hover menggunakan blok kecil. Logo mempertahankan warna hijau merek; efek pembalikan terhadap latar hanya diterapkan pada navigasi. Nama merek dan label menu tetap bersumber dari konfigurasi. Di mobile, menu buka-tutup memiliki latar solid saat dibuka, mendukung keyboard/Escape, dan tetap dapat dipakai tanpa JavaScript. Konten awal diberi jarak agar tidak tertutup header.
 
 ### 02 — Hero: pernyataan utama
 
@@ -119,7 +119,7 @@ Untuk versi demo, status konten fiktif harus mudah ditemukan. Untuk publikasi se
 
 Headline **Mari terhubung.** dipasangkan dengan tombol **Hubungi kami** menuju `/kontak`. Footer memuat navigasi dan kanal kontak yang diisi dalam konfigurasi. WhatsApp, alamat, dan email yang kosong tidak menghasilkan tautan atau baris kosong. Tautan Tentang Template hanya tampil saat mode demo aktif.
 
-Wordmark nama singkat perusahaan tampil besar sebagai penutup visual dan mengikuti konfigurasi merek. Pada layar kecil ukurannya menyesuaikan ruang, tanpa terpotong atau membuat halaman bergeser horizontal. Tidak menambahkan tautan media sosial, kebijakan, atau alamat yang belum tersedia.
+Footer menggunakan hijau gelap yang sama dengan bagian Bidang Usaha, dengan teks terang dan aksen hijau muda. Wordmark nama singkat perusahaan tampil besar sebagai penutup visual dan mengikuti konfigurasi merek. Pada layar kecil ukurannya menyesuaikan ruang, tanpa terpotong atau membuat halaman bergeser horizontal. Tidak menambahkan tautan media sosial, kebijakan, atau alamat yang belum tersedia.
 
 Alur beranda: **kenali perusahaan → pahami bidang usaha → lihat kegiatan → kenali komitmen → hubungi perusahaan**. Bagian opsional dapat disembunyikan tanpa mengganggu alur utama.
 

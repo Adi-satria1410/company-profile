@@ -1,32 +1,40 @@
 ---
 import Brand from '../common/Brand.astro';
-import Button from '../common/Button.astro';
 import { site } from '../../data/site';
 import { getSiteContent } from '../../data/content';
 const { nav } = await getSiteContent();
+const links = [
+  { label: site.labels.home, href: '/' },
+  ...nav,
+  { label: site.labels.contact, href: '/kontak' },
+];
 const active = (href: string) =>
-  Astro.url.pathname === href || Astro.url.pathname.startsWith(href + '/');
+  Astro.url.pathname === href ||
+  (href !== '/' && Astro.url.pathname.startsWith(href + '/'));
 ---
 
 <header class="site-header">
-  <div class="container header-inner">
+  <div class="header-brand">
     <Brand />
+  </div>
+  <div class="container header-inner">
     <nav class="desktop-nav" aria-label="Navigasi utama">
-      {nav.map((n) => (
+      {links.map((n) => (
         <a href={n.href} aria-current={active(n.href) ? 'page' : undefined}>
           {n.label}
         </a>
       ))}
     </nav>
-    <div class="header-action">
-      <Button href="/kontak">{site.labels.contactCta}</Button>
-    </div>
     <details class="mobile-menu">
       <summary aria-label="Menu navigasi">
-        Menu <span aria-hidden="true">☰</span>
+        Menu{' '}
+        <span class="menu-lines" aria-hidden="true">
+          <span></span>
+          <span></span>
+        </span>
       </summary>
       <nav aria-label="Navigasi seluler">
-        {[...nav, { label: site.labels.contact, href: '/kontak' }].map((n) => (
+        {links.map((n) => (
           <a href={n.href} aria-current={active(n.href) ? 'page' : undefined}>
             {n.label}
             <span aria-hidden="true">↗</span>
@@ -38,6 +46,10 @@ const active = (href: string) =>
 </header>
 <script>
   const menu = document.querySelector<HTMLDetailsElement>('.mobile-menu');
+  const desktop = window.matchMedia('(min-width: 768px)');
+  desktop.addEventListener('change', (event) => {
+    if (event.matches && menu) menu.open = false;
+  });
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && menu?.open) {
       menu.open = false;
