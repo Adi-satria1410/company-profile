@@ -1,0 +1,23 @@
+---
+import Container from '../common/Container.astro';
+import { site } from '../../data/site';
+---
+<footer class="mt-24 bg-ink-900 text-ink-200">
+  <Container class="grid gap-8 py-12 md:grid-cols-3">
+    <div>
+      <p class="font-heading text-lg font-bold text-white">{site.name}</p>
+      <p class="mt-2 text-sm">{site.tagline}</p>
+    </div>
+    <nav aria-label="Footer" class="flex flex-col gap-2 text-sm">
+      {site.nav.map((n) => <a href={n.href} class="hover:text-white">{n.label}</a>)}
+      <a href="/kontak" class="hover:text-white">Kontak</a>
+    </nav>
+    <address class="text-sm not-italic">
+      <p>{site.address}</p>
+      <p class="mt-2"><a class="hover:text-white" href={`mailto:${site.email}`}>{site.email}</a></p>
+    </address>
+  </Container>
+  <div class="border-t border-white/10 py-4 text-center text-xs">
+    &copy; {new Date().getFullYear()} {site.name}. Hak cipta dilindungi.
+  </div>
+</footer>

@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/common/Container.astro';
+import SectionHeading from '../components/common/SectionHeading.astro';
+import TeamMember from '../components/cards/TeamMember.astro';
+import { site } from '../data/site';
+const team = (await getCollection('team')).sort((a, b) => a.data.order - b.data.order);
+---
+<BaseLayout title="Tentang" description="Profil, visi, misi, nilai, dan tim Nusantara Group.">
+  <Container class="py-16">
+    <h1 class="text-4xl font-extrabold tracking-tight">Tentang {site.name}</h1>
+    <p class="mt-4 max-w-2xl text-lg">Kami adalah perusahaan yang berdedikasi memberikan solusi bisnis terbaik dengan mengedepankan profesionalisme, integritas, dan inovasi.</p>
+    <div class="mt-12 grid gap-8 md:grid-cols-2">
+      <section><h2 class="text-2xl font-bold">Visi</h2><p class="mt-2">Menjadi perusahaan terdepan yang dipercaya sebagai mitra strategis dalam pengembangan bisnis di Indonesia.</p></section>
+      <section><h2 class="text-2xl font-bold">Misi</h2><p class="mt-2">Memberikan layanan berkualitas tinggi yang berfokus pada kebutuhan klien, dengan pendekatan yang inovatif dan berkelanjutan.</p></section>
+    </div>
+    <div class="mt-16"><SectionHeading title="Nilai kami" /></div>
+    <div class="grid gap-6 md:grid-cols-3">
+      {site.values.map((v) => <div class="rounded-card border border-ink-200 p-6"><h3 class="text-lg font-bold">{v.title}</h3><p class="mt-2">{v.text}</p></div>)}
+    </div>
+    <div class="mt-16"><SectionHeading title="Tim manajemen" /></div>
+    <div class="grid gap-8 sm:grid-cols-3">
+      {team.map((m) => <TeamMember {...m.data} />)}
+    </div>
+  </Container>
+</BaseLayout>

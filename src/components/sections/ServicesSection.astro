@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+import Container from '../common/Container.astro';
+import SectionHeading from '../common/SectionHeading.astro';
+import ServiceCard from '../cards/ServiceCard.astro';
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+---
+<section class="py-20">
+  <Container>
+    <SectionHeading title="Layanan kami" description="Solusi komprehensif untuk membantu bisnis Anda berkembang dan mencapai tujuan." />
+    <div class="grid gap-6 md:grid-cols-3">
+      {services.map((s) => <ServiceCard title={s.data.title} summary={s.data.summary} href={`/layanan/${s.id}`} />)}
+    </div>
+  </Container>
+</section>

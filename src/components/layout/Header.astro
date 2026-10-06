@@ -1,0 +1,27 @@
+---
+import Container from '../common/Container.astro';
+import Button from '../common/Button.astro';
+import { site } from '../../data/site';
+const path = Astro.url.pathname;
+const active = (href: string) => path === href || path.startsWith(href + '/');
+---
+<header class="sticky top-0 z-20 border-b border-ink-200 bg-white/90 backdrop-blur">
+  <Container class="flex h-16 items-center justify-between">
+    <a href="/" class="font-heading text-lg font-extrabold text-ink-900">{site.name}</a>
+    <nav aria-label="Utama" class="hidden items-center gap-6 md:flex">
+      {site.nav.map((n) => (
+        <a href={n.href} aria-current={active(n.href) ? 'page' : undefined}
+          class:list={['text-sm font-medium hover:text-primary', active(n.href) ? 'text-primary' : 'text-ink-700']}>{n.label}</a>
+      ))}
+      <Button href="/kontak" class="!min-h-10">Hubungi kami</Button>
+    </nav>
+    <details class="relative md:hidden">
+      <summary class="flex min-h-11 min-w-11 cursor-pointer list-none items-center justify-center rounded-full border border-ink-200 px-4 text-sm font-medium" aria-label="Buka menu">Menu</summary>
+      <nav aria-label="Menu seluler" class="absolute right-0 mt-2 flex w-56 flex-col rounded-lg border border-ink-200 bg-white p-2 shadow-lg">
+        {[...site.nav, { label: 'Kontak', href: '/kontak' }].map((n) => (
+          <a href={n.href} class="flex min-h-11 items-center rounded px-3 text-sm font-medium hover:bg-ink-50">{n.label}</a>
+        ))}
+      </nav>
+    </details>
+  </Container>
+</header>

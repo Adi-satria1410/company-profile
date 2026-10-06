@@ -1,0 +1,28 @@
+---
+const id = import.meta.env.PUBLIC_FORMSPREE_ID;
+const action = id ? `https://formspree.io/f/${id}` : '';
+const field = 'mt-1 block min-h-11 w-full rounded-lg border border-ink-200 px-3 py-2 text-ink-900';
+---
+<form id="contact-form" method="POST" action={action} class="grid max-w-xl gap-5" data-demo={id ? 'false' : 'true'}>
+  <label class="text-sm font-medium text-ink-900">Nama
+    <input class={field} type="text" name="name" required autocomplete="name" />
+  </label>
+  <label class="text-sm font-medium text-ink-900">Email
+    <input class={field} type="email" name="email" required autocomplete="email" />
+  </label>
+  <label class="text-sm font-medium text-ink-900">Pesan
+    <textarea class={field} name="message" rows="5" required minlength="10"></textarea>
+  </label>
+  <button type="submit" class="min-h-11 rounded-full bg-primary px-6 text-sm font-semibold text-white hover:bg-primary-dark">Kirim pesan</button>
+  <p id="form-status" role="status" class="text-sm text-ink-700"></p>
+</form>
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const status = document.getElementById('form-status');
+  form?.addEventListener('submit', (e) => {
+    if (form.dataset.demo === 'true') {
+      e.preventDefault();
+      if (status) status.textContent = 'Mode demo: pesan tidak dikirim. Isi PUBLIC_FORMSPREE_ID untuk mengaktifkan.';
+    }
+  });
+</script>

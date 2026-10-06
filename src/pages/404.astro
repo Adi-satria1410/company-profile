@@ -1,0 +1,12 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/common/Container.astro';
+import Button from '../components/common/Button.astro';
+---
+<BaseLayout title="Halaman tidak ditemukan">
+  <Container class="py-24">
+    <h1 class="text-4xl font-extrabold">Halaman tidak ditemukan</h1>
+    <p class="mt-4 text-lg">Alamat yang Anda buka tidak ada atau sudah dipindahkan.</p>
+    <Button href="/" class="mt-8">Kembali ke beranda</Button>
+  </Container>
+</BaseLayout>

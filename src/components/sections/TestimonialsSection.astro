@@ -1,0 +1,15 @@
+---
+import { getCollection } from 'astro:content';
+import Container from '../common/Container.astro';
+import SectionHeading from '../common/SectionHeading.astro';
+import TestimonialCard from '../cards/TestimonialCard.astro';
+const items = (await getCollection('testimonials')).sort((a, b) => a.data.order - b.data.order);
+---
+<section class="pb-20">
+  <Container>
+    <SectionHeading title="Testimoni klien" />
+    <div class="grid gap-6 md:grid-cols-3">
+      {items.map((t) => <TestimonialCard {...t.data} />)}
+    </div>
+  </Container>
+</section>
