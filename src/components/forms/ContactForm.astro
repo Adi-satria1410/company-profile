@@ -1,28 +1,68 @@
 ---
-const id = import.meta.env.PUBLIC_FORMSPREE_ID;
-const action = id ? `https://formspree.io/f/${id}` : '';
-const field = 'mt-1 block min-h-11 w-full rounded-lg border border-ink-200 px-3 py-2 text-ink-900';
+import { site } from '../../data/site';
+import Arrow from '../common/Arrow.astro';
+const id = import.meta.env.PUBLIC_FORMSPREE_ID?.trim();
+const enabled = Boolean(id) && !site.demo;
 ---
-<form id="contact-form" method="POST" action={action} class="grid max-w-xl gap-5" data-demo={id ? 'false' : 'true'}>
-  <label class="text-sm font-medium text-ink-900">Nama
-    <input class={field} type="text" name="name" required autocomplete="name" />
-  </label>
-  <label class="text-sm font-medium text-ink-900">Email
-    <input class={field} type="email" name="email" required autocomplete="email" />
-  </label>
-  <label class="text-sm font-medium text-ink-900">Pesan
-    <textarea class={field} name="message" rows="5" required minlength="10"></textarea>
-  </label>
-  <button type="submit" class="min-h-11 rounded-full bg-primary px-6 text-sm font-semibold text-white hover:bg-primary-dark">Kirim pesan</button>
-  <p id="form-status" role="status" class="text-sm text-ink-700"></p>
-</form>
-<script>
-  const form = document.getElementById('contact-form') as HTMLFormElement | null;
-  const status = document.getElementById('form-status');
-  form?.addEventListener('submit', (e) => {
-    if (form.dataset.demo === 'true') {
-      e.preventDefault();
-      if (status) status.textContent = 'Mode demo: pesan tidak dikirim. Isi PUBLIC_FORMSPREE_ID untuk mengaktifkan.';
-    }
-  });
-</script>
+
+<div class="contact-form">
+  <h2>{site.contact.formTitle}</h2>
+  <p>{site.contact.formIntro}</p>
+  {!enabled && (
+    <p class="demo-note">Form contoh — pesan belum dapat dikirim.</p>
+  )}
+  <form
+    id="contact-form"
+    method="POST"
+    action={enabled ? `https://formspree.io/f/${id}` : undefined}
+  >
+    <label>
+      Nama
+      <input
+        class="form-field"
+        type="text"
+        name="name"
+        required
+        autocomplete="name"
+        placeholder="Nama lengkap Anda"
+      />
+    </label>
+    <label>
+      Email
+      <input
+        class="form-field"
+        type="email"
+        name="email"
+        required
+        autocomplete="email"
+        placeholder="nama@perusahaan.com"
+      />
+    </label>
+    <label>
+      Pesan
+      <textarea
+        class="form-field"
+        name="message"
+        rows="4"
+        required
+        minlength="10"
+        placeholder="Apa yang ingin Anda bicarakan?"
+      ></textarea>
+    </label>
+    <div hidden aria-hidden="true">
+      <label>
+        Jangan isi kolom ini
+        <input name="_gotcha" tabindex="-1" autocomplete="off" />
+      </label>
+    </div>
+    <button type="submit" class="button button--primary" disabled={!enabled}>
+      <span>Kirim pesan</span>
+      <Arrow />
+    </button>
+    <p class="form-status">
+      {enabled
+        ? 'Pesan dikirim melalui Formspree. Setelah terkirim, Anda akan diarahkan ke halaman konfirmasi.'
+        : 'Anda dapat mencoba mengisi kolom di atas. Pengiriman dinonaktifkan pada contoh ini.'}
+    </p>
+  </form>
+</div>

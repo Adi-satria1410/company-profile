@@ -1,19 +1,14 @@
 ---
-import Container from '../common/Container.astro';
 import { site } from '../../data/site';
 ---
-<section class="bg-ink-900 py-20 text-ink-200">
-  <Container>
-    <h2 class="mb-10 text-3xl font-bold tracking-tight !text-white sm:text-4xl">Kenapa memilih kami</h2>
-    <dl class="grid gap-8 sm:grid-cols-3">
-      {site.stats.map((s) => (
-        <div><dt class="text-sm">{s.label}</dt><dd class="font-heading text-4xl font-extrabold text-accent">{s.value}</dd></div>
-      ))}
-    </dl>
-    <div class="mt-12 grid gap-6 md:grid-cols-3">
-      {site.values.map((v) => (
-        <div><h3 class="text-lg font-bold !text-white">{v.title}</h3><p class="mt-1">{v.text}</p></div>
-      ))}
-    </div>
-  </Container>
-</section>
+
+{site.sections.stats && site.stats.length > 0 && (
+  <section class="container stats-grid" aria-label="Perusahaan dalam angka">
+    {site.stats.map((s) => (
+      <div>
+        <strong>{s.value}</strong>
+        <p>{s.label}</p>
+      </div>
+    ))}
+  </section>
+)}

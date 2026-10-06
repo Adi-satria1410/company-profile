@@ -1,23 +1,61 @@
 ---
-import Container from '../common/Container.astro';
 import { site } from '../../data/site';
+import { getSiteContent } from '../../data/content';
+import Arrow from '../common/Arrow.astro';
+const { nav } = await getSiteContent();
 ---
-<footer class="mt-24 bg-ink-900 text-ink-200">
-  <Container class="grid gap-8 py-12 md:grid-cols-3">
-    <div>
-      <p class="font-heading text-lg font-bold text-white">{site.name}</p>
-      <p class="mt-2 text-sm">{site.tagline}</p>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <p class="footer-note preserve-lines">{site.footer.note}</p>
+      <div>
+        <p class="eyebrow">{site.footer.navigation}</p>
+        <nav aria-label="Navigasi footer">
+          <a href="/">{site.labels.home}</a>
+          {nav.map((n) => (
+            <a href={n.href}>{n.label}</a>
+          ))}
+          <a href="/kontak">{site.labels.contact}</a>
+        </nav>
+      </div>
+      <div class="footer-contact">
+        <p class="eyebrow">{site.footer.contact}</p>
+        {site.address && <p>{site.address}</p>}
+        {site.email && (
+          <a href={`mailto:${site.email}`}>
+            {site.email}
+            <Arrow diagonal />
+          </a>
+        )}
+        {site.whatsapp && (
+          <a href={`https://wa.me/${site.whatsapp}`}>
+            WhatsApp
+            <Arrow diagonal />
+          </a>
+        )}
+      </div>
     </div>
-    <nav aria-label="Footer" class="flex flex-col gap-2 text-sm">
-      {site.nav.map((n) => <a href={n.href} class="hover:text-white">{n.label}</a>)}
-      <a href="/kontak" class="hover:text-white">Kontak</a>
-    </nav>
-    <address class="text-sm not-italic">
-      <p>{site.address}</p>
-      <p class="mt-2"><a class="hover:text-white" href={`mailto:${site.email}`}>{site.email}</a></p>
-    </address>
-  </Container>
-  <div class="border-t border-white/10 py-4 text-center text-xs">
-    &copy; {new Date().getFullYear()} {site.name}. Hak cipta dilindungi.
+    <div
+      class="footer-wordmark"
+      style={`--word-length: ${Math.max(site.shortName.length * 0.58, 6)}`}
+    >
+      {site.shortName}
+      <span class="brand-dot">.</span>
+    </div>
+    <div class="footer-bottom">
+      <span>
+        © {new Date().getFullYear()} {site.name}
+      </span>
+      {site.demo ? (
+        <a href="/tentang-proyek">
+          Template demo · Konten & foto ilustratif{' '}
+          <span aria-hidden="true">↗</span>
+        </a>
+      ) : (
+        <span>Hak cipta dilindungi.</span>
+      )}
+      <a href="#top">Kembali ke atas ↑</a>
+    </div>
   </div>
 </footer>

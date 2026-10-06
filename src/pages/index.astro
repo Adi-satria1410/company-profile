@@ -1,17 +1,23 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/sections/Hero.astro';
+import AboutSection from '../components/sections/AboutSection.astro';
 import ServicesSection from '../components/sections/ServicesSection.astro';
 import StatsSection from '../components/sections/StatsSection.astro';
 import ProjectsSection from '../components/sections/ProjectsSection.astro';
+import CommitmentSection from '../components/sections/CommitmentSection.astro';
 import TestimonialsSection from '../components/sections/TestimonialsSection.astro';
 import CTABanner from '../components/sections/CTABanner.astro';
+import { site } from '../data/site';
 ---
-<BaseLayout title="Beranda">
+
+<BaseLayout title={site.labels.home}>
   <Hero />
-  <ServicesSection />
+  <AboutSection />
   <StatsSection />
+  <ServicesSection />
   <ProjectsSection />
+  <CommitmentSection />
   <TestimonialsSection />
   <CTABanner />
 </BaseLayout>

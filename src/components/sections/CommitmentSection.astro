@@ -1,0 +1,44 @@
+---
+import { site } from '../../data/site';
+import { imageSrcSet } from '../../data/images';
+import Arrow from '../common/Arrow.astro';
+---
+
+<section class="commitment-section">
+  <div class="commitment-photo">
+    <img
+      src={site.commitment.image}
+      srcset={imageSrcSet(site.commitment.image)}
+      sizes="(max-width: 767px) 100vw, 50vw"
+      alt={site.commitment.alt}
+      width="1400"
+      height="933"
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="commitment-photo-caption">
+      <span>{site.name}</span>
+      <span aria-hidden="true">✳</span>
+    </div>
+  </div>
+  <div class="commitment-content">
+    <p class="eyebrow">{site.commitment.eyebrow}</p>
+    <h2 class="preserve-lines">{site.commitment.title}</h2>
+    <p>{site.commitment.description}</p>
+    <div class="values-list">
+      {site.values.map((v, i) => (
+        <div>
+          <span class="item-number">0{i + 1}</span>
+          <div>
+            <h3>{v.title}</h3>
+            <p>{v.text}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    <a href="/tentang" class="text-link">
+      {site.labels.aboutCta}
+      <Arrow diagonal />
+    </a>
+  </div>
+</section>

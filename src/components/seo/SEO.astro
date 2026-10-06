@@ -1,18 +1,25 @@
 ---
 import { site } from '../../data/site';
-interface Props { title: string; description?: string }
+interface Props {
+  title: string;
+  description?: string;
+}
 const { title, description = site.description } = Astro.props;
-const fullTitle = Astro.url.pathname === '/' ? `${site.name}: ${site.tagline}` : `${title} | ${site.name}`;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+const fullTitle =
+  Astro.url.pathname === '/'
+    ? `${site.name}: ${site.tagline}`
+    : `${title} | ${site.name}`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   name: site.name,
-  url: site.url,
-  email: site.email,
+  url: Astro.site?.href,
+  ...(site.email ? { email: site.email } : {}),
   description: site.description,
 };
 ---
+
 <title>{fullTitle}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonical} />
@@ -21,4 +28,7 @@ const jsonLd = {
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
 <meta name="twitter:card" content="summary" />
-<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')}
+/>

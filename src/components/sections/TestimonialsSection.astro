@@ -1,15 +1,30 @@
 ---
 import { getCollection } from 'astro:content';
-import Container from '../common/Container.astro';
-import SectionHeading from '../common/SectionHeading.astro';
-import TestimonialCard from '../cards/TestimonialCard.astro';
-const items = (await getCollection('testimonials')).sort((a, b) => a.data.order - b.data.order);
+import { site } from '../../data/site';
+const items = site.sections.testimonials
+  ? (await getCollection('testimonials'))
+      .sort((a, b) => a.data.order - b.data.order)
+      .slice(0, 3)
+  : [];
 ---
-<section class="pb-20">
-  <Container>
-    <SectionHeading title="Testimoni klien" />
-    <div class="grid gap-6 md:grid-cols-3">
-      {items.map((t) => <TestimonialCard {...t.data} />)}
+
+{items.length > 0 && (
+  <section class="testimonials-section">
+    <div class="container">
+      <p class="eyebrow">{site.labels.testimonials}</p>
+      <div class="testimonials-grid">
+        {items.map((t) => (
+          <figure>
+            <blockquote>“{t.data.quote}”</blockquote>
+            <figcaption>
+              {t.data.name}
+              <span>
+                {t.data.role} · {t.data.company}
+              </span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
     </div>
-  </Container>
-</section>
+  </section>
+)}

@@ -1,15 +1,29 @@
 ---
-import { getCollection } from 'astro:content';
-import Container from '../common/Container.astro';
-import SectionHeading from '../common/SectionHeading.astro';
+import { site } from '../../data/site';
+import { getSiteContent } from '../../data/content';
 import ProjectCard from '../cards/ProjectCard.astro';
-const projects = (await getCollection('projects', (p) => p.data.featured)).sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+import Arrow from '../common/Arrow.astro';
+const { projects } = await getSiteContent();
+const featured = projects.filter((p) => p.data.featured);
+const items = (featured.length ? featured : projects).slice(0, 3);
 ---
-<section class="py-20">
-  <Container>
-    <SectionHeading title="Proyek unggulan" description="Beberapa proyek yang telah kami kerjakan bersama klien." />
-    <div class="grid gap-6 md:grid-cols-3">
-      {projects.map((p) => <ProjectCard {...p.data} href={`/portofolio/${p.id}`} />)}
+
+{items.length > 0 && (
+  <section class="section container">
+    <div class="section-top">
+      <div>
+        <p class="eyebrow">03 / {site.labels.projects}</p>
+        <h2>{site.activities.title}</h2>
+      </div>
+      <a href="/portofolio" class="text-link">
+        {site.labels.allProjects}
+        <Arrow diagonal />
+      </a>
     </div>
-  </Container>
-</section>
+    <div class="projects-grid">
+      {items.map((p) => (
+        <ProjectCard {...p.data} href={`/portofolio/${p.id}`} />
+      ))}
+    </div>
+  </section>
+)}

@@ -1,20 +1,45 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Container from '../components/common/Container.astro';
-import Button from '../components/common/Button.astro';
 import ContactForm from '../components/forms/ContactForm.astro';
+import Arrow from '../components/common/Arrow.astro';
 import { site } from '../data/site';
 ---
-<BaseLayout title="Kontak" description="Hubungi Nusantara Group lewat form, email, atau WhatsApp.">
-  <Container class="grid gap-12 py-16 lg:grid-cols-2">
+
+<BaseLayout title={site.labels.contact} description={site.contact.description}>
+  <div class="container contact-page">
     <div>
-      <h1 class="text-4xl font-extrabold tracking-tight">Hubungi kami</h1>
-      <p class="mt-4 text-lg">Kami siap mendengarkan kebutuhan Anda. Silakan hubungi kami kapan saja.</p>
-      <div class="mt-8 flex flex-wrap gap-3">
-        <Button href={`mailto:${site.email}`} variant="outline">Kirim email</Button>
-        <Button href={`https://wa.me/${site.whatsapp}`} variant="accent">Chat WhatsApp</Button>
+      <div class="page-heading">
+        <p class="eyebrow">{site.contact.eyebrow}</p>
+        <h1>{site.contact.title}</h1>
+        <p>{site.contact.description}</p>
+      </div>
+      <div class="contact-details">
+        {site.email && (
+          <>
+            <p class="eyebrow">EMAIL</p>
+            <a href={`mailto:${site.email}`}>
+              {site.email}
+              <Arrow diagonal />
+            </a>
+          </>
+        )}
+        {site.whatsapp && (
+          <>
+            <p class="eyebrow">WHATSAPP</p>
+            <a href={`https://wa.me/${site.whatsapp}`}>
+              WhatsApp
+              <Arrow diagonal />
+            </a>
+          </>
+        )}
+        {site.address && (
+          <>
+            <p class="eyebrow">LOKASI</p>
+            <p>{site.address}</p>
+          </>
+        )}
       </div>
     </div>
     <ContactForm />
-  </Container>
+  </div>
 </BaseLayout>

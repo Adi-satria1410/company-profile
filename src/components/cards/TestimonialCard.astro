@@ -1,8 +1,18 @@
 ---
-interface Props { quote: string; name: string; role: string; company: string }
+interface Props {
+  quote: string;
+  name: string;
+  role: string;
+  company: string;
+}
 const { quote, name, role, company } = Astro.props;
 ---
+
 <figure class="rounded-card bg-ink-50 p-6">
   <blockquote class="text-ink-900">“{quote}”</blockquote>
-  <figcaption class="mt-4 text-sm"><strong class="text-ink-900">{name}</strong><br />{role}, {company}</figcaption>
+  <figcaption class="mt-4 text-sm">
+    <strong class="text-ink-900">{name}</strong>
+    <br />
+    {role}, {company}
+  </figcaption>
 </figure>

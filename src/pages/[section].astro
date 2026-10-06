@@ -1,0 +1,84 @@
+---
+import { getSiteContent } from '../data/content';
+import { site } from '../data/site';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceCard from '../components/cards/ServiceCard.astro';
+import ProjectCard from '../components/cards/ProjectCard.astro';
+import CTABanner from '../components/sections/CTABanner.astro';
+export async function getStaticPaths() {
+  const { services, projects } = await getSiteContent();
+  return [
+    ...(services.length ? [{ params: { section: 'layanan' } }] : []),
+    ...(projects.length ? [{ params: { section: 'portofolio' } }] : []),
+    ...(site.demo ? [{ params: { section: 'tentang-proyek' } }] : []),
+  ];
+}
+const { services, projects } = await getSiteContent();
+const section = Astro.params.section;
+const isBusiness = section === 'layanan';
+const isDemo = section === 'tentang-proyek';
+const title = isDemo
+  ? 'Tentang Template'
+  : isBusiness
+    ? site.labels.services
+    : site.labels.projects;
+const description = isDemo
+  ? 'Template company profile lintas industri dengan konten contoh.'
+  : isBusiness
+    ? site.business.description
+    : site.activities.description;
+---
+
+<BaseLayout title={title} description={description} noindex={isDemo}>
+  <div class="container">
+    <div class="page-heading">
+      <p class="eyebrow">{title}</p>
+      <h1 class="preserve-lines">
+        {isDemo
+          ? 'Sebuah awal.\nBanyak kemungkinan.'
+          : isBusiness
+            ? site.business.title
+            : site.activities.title}
+      </h1>
+      <p>{description}</p>
+    </div>
+    {isBusiness && (
+      <div class="services-grid">
+        {services.map((s, i) => (
+          <ServiceCard {...s.data} index={i + 1} href={`/layanan/${s.id}`} />
+        ))}
+      </div>
+    )}
+    {!isBusiness && !isDemo && (
+      <div class="projects-grid listing-grid">
+        {projects.map((p) => (
+          <ProjectCard {...p.data} href={`/portofolio/${p.id}`} />
+        ))}
+      </div>
+    )}
+    {isDemo && (
+      <article class="prose article-layout">
+        <p>
+          Website ini merupakan contoh template company profile umum. Nama
+          perusahaan, kegiatan, profil tim, serta testimoni adalah konten
+          ilustratif. Foto stok tidak menggambarkan fasilitas, tim, atau
+          pekerjaan perusahaan yang sebenarnya.
+        </p>
+        <h2>Dirancang untuk digunakan kembali</h2>
+        <p>
+          Identitas, teks utama, navigasi, dan bagian opsional dapat
+          disesuaikan. Struktur yang sama dapat digunakan oleh perusahaan di
+          berbagai bidang tanpa menyusun ulang setiap halaman.
+        </p>
+        <h2>Tentang foto</h2>
+        <p>
+          Foto ilustratif berasal dari{' '}
+          <a href="https://unsplash.com">Unsplash</a>. Daftar sumber tersedia
+          dalam dokumentasi proyek. Ganti dengan foto perusahaan yang sesuai
+          sebelum dipakai sebagai profil perusahaan nyata.
+        </p>
+      </article>
+    )}
+  </div>
+  {!isDemo && <CTABanner />}
+</BaseLayout>

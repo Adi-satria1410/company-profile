@@ -1,15 +1,37 @@
 ---
-import { getCollection } from 'astro:content';
-import Container from '../common/Container.astro';
-import SectionHeading from '../common/SectionHeading.astro';
-import ServiceCard from '../cards/ServiceCard.astro';
-const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+import { site } from '../../data/site';
+import { getSiteContent } from '../../data/content';
+import Arrow from '../common/Arrow.astro';
+const { services } = await getSiteContent();
 ---
-<section class="py-20">
-  <Container>
-    <SectionHeading title="Layanan kami" description="Solusi komprehensif untuk membantu bisnis Anda berkembang dan mencapai tujuan." />
-    <div class="grid gap-6 md:grid-cols-3">
-      {services.map((s) => <ServiceCard title={s.data.title} summary={s.data.summary} href={`/layanan/${s.id}`} />)}
+
+{services.length > 0 && (
+  <section class="business-section">
+    <div class="container business-grid">
+      <div class="business-intro">
+        <p class="eyebrow">02 / {site.labels.services}</p>
+        <h2 class="preserve-lines">{site.business.title}</h2>
+        <p>{site.business.description}</p>
+        <span class="business-symbol" aria-hidden="true">
+          ↗
+        </span>
+      </div>
+      <div class="business-list">
+        {services.map((s, i) => (
+          <a href={`/layanan/${s.id}`} class="business-row">
+            <span class="item-number">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <h3>{s.data.title}</h3>
+              <p>{s.data.summary}</p>
+            </div>
+            <Arrow diagonal />
+          </a>
+        ))}
+        <a class="text-link light-link" href="/layanan">
+          {site.labels.allServices}
+          <Arrow />
+        </a>
+      </div>
     </div>
-  </Container>
-</section>
+  </section>
+)}

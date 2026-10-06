@@ -1,0 +1,19 @@
+---
+import { site } from '../../data/site';
+import Arrow from '../common/Arrow.astro';
+---
+
+<section id="sekilas" class="section container about-section">
+  <div>
+    <p class="eyebrow">01 / {site.about.eyebrow}</p>
+    <h2 class="preserve-lines">{site.about.title}</h2>
+  </div>
+  <div class="about-copy">
+    <p class="lead">{site.about.intro}</p>
+    <p>{site.about.description}</p>
+    <a href="/tentang" class="text-link">
+      {site.labels.aboutCta}
+      <Arrow diagonal />
+    </a>
+  </div>
+</section>

@@ -1,7 +1,7 @@
 ---
 name: Diana Putri
-role: CEO
-company: PT Karya Gemilang
-quote: Nusantara Group membantu kami menyusun strategi bisnis yang tepat. Hasilnya sangat memuaskan dan melampaui ekspektasi.
+role: Perwakilan Mitra
+company: Perusahaan Contoh A
+quote: Komunikasi yang terbuka membantu kami memahami setiap langkah kerja sama dengan lebih baik.
 order: 1
 ---

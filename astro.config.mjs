@@ -3,10 +3,17 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// Ganti dengan domain Vercel Anda setelah deploy.
+// URL disediakan Netlify saat build; SITE_URL dapat mengatur domain secara manual.
 export default defineConfig({
-  site: 'https://nusantara-studio.vercel.app',
-  integrations: [sitemap()],
-  // Cast: tipe Vite di Astro 5 dan @tailwindcss/vite berbeda versi (hanya masalah tipe).
-  vite: { plugins: [/** @type {any} */ (tailwindcss())] },
+  site: process.env.SITE_URL || process.env.URL || 'http://localhost:4321',
+  output: 'static',
+  integrations: [
+    sitemap({
+      filter: (page) =>
+        !page.endsWith('/tentang-proyek/') && !page.endsWith('/tentang-proyek'),
+    }),
+  ],
+  vite: {
+    plugins: [tailwindcss()],
+  },
 });

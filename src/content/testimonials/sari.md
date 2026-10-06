@@ -1,7 +1,7 @@
 ---
 name: Lestari Handayani
-role: HR Manager
-company: PT Maju Bersama
-quote: Program pelatihan SDM dari Nusantara Group sangat berdampak positif terhadap produktivitas tim kami.
+role: Perwakilan Mitra
+company: Perusahaan Contoh C
+quote: Kami menghargai kesediaan tim untuk mendengarkan dan mencari jalan bersama.
 order: 3
 ---
